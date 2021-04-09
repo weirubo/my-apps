@@ -20,5 +20,5 @@ func (u User) Create(db *gorm.DB) error {
 		fmt.Println(err)
 		return err
 	}
-	return db.Create(u).Error
+	return db.Create(&u).Error
 }

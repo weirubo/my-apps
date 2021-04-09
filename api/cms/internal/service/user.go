@@ -6,6 +6,6 @@ type User struct {
 	PassWord string `json:"password"`
 }
 
-func (s service) Add(param *User) error {
-	return s.dao.Create(param.UserName, param.Email, param.PassWord)
+func (s service) AddUser(param *User) error {
+	return s.dao.CreateUser(param.UserName, param.Email, param.PassWord)
 }

@@ -7,19 +7,18 @@ import (
 	"net/http"
 )
 
-type User struct {
+type Tag struct {
 }
 
-// 定义方法
-func (u User) Add(c *gin.Context) {
-	param := &service.User{}
+func (t Tag) Add(c *gin.Context) {
+	param := &service.Tag{}
 	err := c.ShouldBind(param)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	svc := service.New()
-	err = svc.AddUser(param)
+	err = svc.AddTag(param)
 	if err != nil {
 		fmt.Println(err)
 		return

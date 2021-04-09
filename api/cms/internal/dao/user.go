@@ -7,7 +7,7 @@ import (
 
 // 数据操作层
 
-func (d *Dao) Create(username, email, password string) error {
+func (d *Dao) CreateUser(username, email, password string) error {
 	user := model.User{
 		Model:    gorm.Model{},
 		Username: username,
