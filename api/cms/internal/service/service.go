@@ -9,6 +9,11 @@ type service struct {
 	dao *dao.Dao
 }
 
+type Page struct {
+	PageSize   int `form:"page_size"`
+	PageOffset int `form:"page_offset"`
+}
+
 // 实例化
 func New() service {
 	svc := service{

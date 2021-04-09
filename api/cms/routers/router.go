@@ -18,6 +18,7 @@ func NewRouter() *gin.Engine {
 	v1 := r.Group("/v1")
 	{
 		v1.POST("/user/add", user.Add)
+		v1.GET("/user/all", user.GetUsers)
 		v1.POST("/category/add", category.Add)
 		v1.POST("/tag/add", tag.Add)
 		v1.POST("/article/add", article.Add)

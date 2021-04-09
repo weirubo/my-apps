@@ -6,7 +6,6 @@ import (
 )
 
 // 数据操作层
-
 func (d *Dao) CreateUser(username, email, password string) error {
 	user := model.User{
 		Model:    gorm.Model{},
@@ -15,4 +14,9 @@ func (d *Dao) CreateUser(username, email, password string) error {
 		Password: password,
 	}
 	return user.Create(d.dbEngine)
+}
+
+func (d *Dao) ReadUsers(pageSize, pageOffset int) ([]model.User, error) {
+	user := model.User{}
+	return user.ReadByPage(d.dbEngine, pageSize, pageOffset)
 }

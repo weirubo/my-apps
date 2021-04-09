@@ -10,7 +10,7 @@ type User struct {
 	gorm.Model
 	Username string `gorm:"type:varchar(20);not null;index:idx_username_email;commit:用户名"`
 	Email    string `gorm:"type:varchar(20);not null;unique;index:idx_username_email;commit:邮箱"`
-	Password string `gorm:"type:varchar(20);not null;commit:密码"`
+	Password string `gorm:"type:varchar(20);not null;commit:密码" json:"-"`
 }
 
 // 表操作
@@ -21,4 +21,13 @@ func (u User) Create(db *gorm.DB) error {
 		return err
 	}
 	return db.Create(&u).Error
+}
+
+func (u User) ReadByPage(db *gorm.DB, pageSize, pageOffset int) ([]User, error) {
+	var users []User
+	tx := db.Select("id", "username", "email", "created_at", "updated_at").Limit(pageSize).Offset(pageOffset).Find(&users)
+	if err := tx.Error; err != nil {
+		return nil, err
+	}
+	return users, nil
 }
