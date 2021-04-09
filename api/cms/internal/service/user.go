@@ -15,5 +15,5 @@ func (s service) AddUser(param *UserReq) error {
 }
 
 func (s service) GetUsers(param *Page) ([]model.User, error) {
-	return s.dao.ReadUsers(param.PageSize, param.PageOffset)
+	return s.dao.ReadUsers(param.PageNumber, param.PageSize)
 }

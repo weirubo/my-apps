@@ -23,9 +23,10 @@ func (u User) Create(db *gorm.DB) error {
 	return db.Create(&u).Error
 }
 
-func (u User) ReadByPage(db *gorm.DB, pageSize, pageOffset int) ([]User, error) {
+func (u User) ReadByPage(db *gorm.DB, pageNumber, pageSize int) ([]User, error) {
 	var users []User
-	tx := db.Select("id", "username", "email", "created_at", "updated_at").Limit(pageSize).Offset(pageOffset).Find(&users)
+	pageOffset := (pageNumber - 1) * pageSize
+	tx := db.Select("id", "username", "email", "created_at", "updated_at").Order("id desc").Limit(pageSize).Offset(pageOffset).Find(&users)
 	if err := tx.Error; err != nil {
 		return nil, err
 	}

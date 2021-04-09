@@ -10,8 +10,8 @@ type service struct {
 }
 
 type Page struct {
+	PageNumber int `form:"page_number"`
 	PageSize   int `form:"page_size"`
-	PageOffset int `form:"page_offset"`
 }
 
 // 实例化

@@ -16,7 +16,7 @@ func (d *Dao) CreateUser(username, email, password string) error {
 	return user.Create(d.dbEngine)
 }
 
-func (d *Dao) ReadUsers(pageSize, pageOffset int) ([]model.User, error) {
+func (d *Dao) ReadUsers(pageNumber, pageSize int) ([]model.User, error) {
 	user := model.User{}
-	return user.ReadByPage(d.dbEngine, pageSize, pageOffset)
+	return user.ReadByPage(d.dbEngine, pageNumber, pageSize)
 }
