@@ -47,3 +47,8 @@ func (d *Dao) CreateArticle(title, description, content, categoryName, tagName s
 	}
 	return tx.Commit().Error
 }
+
+func (d *Dao) ReadArticles(pageNumber, pageSize int) ([]model.Article, error) {
+	article := model.Article{}
+	return article.ReadByPage(d.dbEngine, pageNumber, pageSize)
+}

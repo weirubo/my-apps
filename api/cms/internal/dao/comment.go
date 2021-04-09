@@ -14,3 +14,8 @@ func (d *Dao) CreateComment(content string, articleID, commentID uint) error {
 	}
 	return comment.Create(d.dbEngine)
 }
+
+func (d *Dao) ReadComments(pageNumber, pageSize int) ([]model.Comment, error) {
+	comment := model.Comment{}
+	return comment.ReadByPage(d.dbEngine, pageNumber, pageSize)
+}

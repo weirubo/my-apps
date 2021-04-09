@@ -21,3 +21,14 @@ func (t Tag) Create(db *gorm.DB) error {
 	}
 	return db.Create(&t).Error
 }
+
+func (t Tag) ReadByPage(db *gorm.DB, pageNumber, pageSize int) ([]Tag, error) {
+	var tags []Tag
+	pageOffset := (pageNumber - 1) * pageSize
+	tx := db.Select("id", "tag_name", "count", "created_at", "updated_at").Limit(pageSize).Offset(pageOffset).Find(&tags)
+	if err := tx.Error; err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	return tags, nil
+}

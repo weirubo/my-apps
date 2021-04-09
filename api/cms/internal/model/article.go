@@ -24,3 +24,14 @@ func (a Article) Create(db *gorm.DB) error {
 	}
 	return db.Create(&a).Error
 }
+
+func (a Article) ReadByPage(db *gorm.DB, pageNumber, pageSize int) ([]Article, error) {
+	var articles []Article
+	pageOffset := (pageNumber - 1) * pageSize
+	tx := db.Select("id", "title", "description", "category_id", "category_name", "comment_count", "created_at", "updated_at").Limit(pageSize).Offset(pageOffset).Find(&articles)
+	if err := tx.Error; err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	return articles, nil
+}

@@ -13,3 +13,8 @@ func (d *Dao) CreateTag(tagName string, count uint) error {
 	}
 	return tag.Create(d.dbEngine)
 }
+
+func (d *Dao) ReadTags(pageNumber, pageSize int) ([]model.Tag, error) {
+	tag := model.Tag{}
+	return tag.ReadByPage(d.dbEngine, pageNumber, pageSize)
+}
