@@ -13,6 +13,8 @@ type Comment struct {
 type CommentRes struct {
 	ID        uint   `json:"id"`
 	Content   string `json:"content"`
+	UserID    uint   `json:"uid"`
+	UserName  string `json:"username"`
 	ArticleID uint   `json:"article_id"`
 	CommentID uint   `json:"comment_id"`
 	CreatedAt string `json:"created_at"`
@@ -53,6 +55,8 @@ func (com Comment) List(c *gin.Context) {
 	for _, v := range comments {
 		comment.ID = v.ID
 		comment.Content = v.Content
+		comment.UserID = v.UserID
+		comment.UserName = v.UserName
 		comment.ArticleID = v.ArticleID
 		comment.CommentID = v.CommentID
 		comment.CreatedAt = v.CreatedAt.Format("2006-01-02 15:04:05")

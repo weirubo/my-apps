@@ -5,10 +5,12 @@ import (
 	"my-apps/api/cms/internal/model"
 )
 
-func (d *Dao) CreateComment(content string, articleID, commentID uint) error {
+func (d *Dao) CreateComment(content, username string, uid, articleID, commentID uint) error {
 	comment := model.Comment{
 		Model:     gorm.Model{},
 		Content:   content,
+		UserID:    uid,
+		UserName:  username,
 		ArticleID: articleID,
 		CommentID: commentID,
 	}
