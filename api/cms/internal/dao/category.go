@@ -28,3 +28,12 @@ func (d *Dao) UpdateCategory(id uint, categoryName string) error {
 	}
 	return category.UpdateByID(d.dbEngine)
 }
+
+func (d *Dao) DeleteCategory(id uint) error {
+	category := model.Category{
+		Model: gorm.Model{
+			ID: id,
+		},
+	}
+	return category.DeleteByID(d.dbEngine)
+}

@@ -79,3 +79,19 @@ func (u User) Edit(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{})
 }
+
+func (u User) Remove(c *gin.Context) {
+	param := &service.UserReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.DeleteUser(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
+}

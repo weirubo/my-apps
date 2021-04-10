@@ -79,3 +79,19 @@ func (cate Category) Edit(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{})
 }
+
+func (cate Category) Remove(c *gin.Context) {
+	param := &service.CategoryReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.DeleteCategory(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
+}

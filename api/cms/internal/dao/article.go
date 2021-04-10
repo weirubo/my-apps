@@ -94,3 +94,39 @@ func (d *Dao) UpdateArticle(id, commentCount uint, title, description, content, 
 	// TODO::更新分类表的文章总数和标签表的文章总数
 	return tx.Commit().Error
 }
+
+func (d *Dao) DeleteArticle(id uint) error {
+	article := model.Article{
+		Model: gorm.Model{
+			ID: id,
+		},
+	}
+	articleView := model.ArticleView{
+		Model: gorm.Model{
+			ID: id,
+		},
+	}
+	tx := d.dbEngine.Begin()
+	if err := tx.Error; err != nil {
+		return err
+	}
+	if err := tx.Delete(&article, &article.ID).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+	if err := tx.Delete(&articleView, &articleView.ID).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+	// TODO::更新分类表的文章总数和标签表的文章总数
+	return tx.Commit().Error
+}
+
+func (d *Dao) ReadArticle(id uint) (model.ArticleView, error) {
+	articleView := model.ArticleView{
+		Model: gorm.Model{
+			ID: id,
+		},
+	}
+	return articleView.Read(d.dbEngine)
+}

@@ -28,3 +28,12 @@ func (d *Dao) UpdateTag(id uint, tagName string) error {
 	}
 	return tag.UpdateByID(d.dbEngine)
 }
+
+func (d *Dao) DeleteTag(id uint) error {
+	tag := model.Tag{
+		Model: gorm.Model{
+			ID: id,
+		},
+	}
+	return tag.DeleteByID(d.dbEngine)
+}

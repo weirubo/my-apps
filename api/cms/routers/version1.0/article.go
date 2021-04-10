@@ -84,3 +84,44 @@ func (a Article) Edit(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{})
 }
+
+func (a Article) Remove(c *gin.Context) {
+	param := &service.ArticleReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.DeleteArticle(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
+}
+
+func (a Article) View(c *gin.Context) {
+	param := &service.ArticleReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	articleView, err := svc.GetArticle(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	articleData := ArticleRes{
+		ID:           articleView.ID,
+		Title:        articleView.Title,
+		CategoryID:   articleView.CategoryID,
+		CategoryName: articleView.CategoryName,
+		CommentCount: articleView.CommentCount,
+		CreatedAt:    articleView.CreatedAt.Format("2006-01-02 15:04:05"),
+		UpdatedAt:    articleView.UpdatedAt.Format("2006-01-02 15:04:05"),
+	}
+	c.JSON(http.StatusOK, articleData)
+}

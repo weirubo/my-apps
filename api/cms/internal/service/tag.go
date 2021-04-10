@@ -19,3 +19,7 @@ func (s service) GetTags(param *Page) ([]model.Tag, error) {
 func (s service) UpdateTag(param *TagReq) error {
 	return s.dao.UpdateTag(param.ID, param.TagName)
 }
+
+func (s service) DeleteTag(param *TagReq) error {
+	return s.dao.DeleteTag(param.ID)
+}

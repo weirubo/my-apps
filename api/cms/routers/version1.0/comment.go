@@ -80,3 +80,19 @@ func (com Comment) Edit(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{})
 }
+
+func (com Comment) Remove(c *gin.Context) {
+	param := &service.CommentReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.DeleteComment(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
+}

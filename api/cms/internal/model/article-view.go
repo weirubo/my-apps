@@ -24,3 +24,12 @@ func (av ArticleView) Create(db *gorm.DB) error {
 	}
 	return db.Create(&av).Error
 }
+
+func (av ArticleView) Read(db *gorm.DB) (ArticleView, error) {
+	var articleView ArticleView
+	tx := db.First(&articleView, av.ID)
+	if err := tx.Error; err != nil {
+		return articleView, err
+	}
+	return articleView, nil
+}

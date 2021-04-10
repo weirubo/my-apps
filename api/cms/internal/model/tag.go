@@ -38,3 +38,11 @@ func (t Tag) UpdateByID(db *gorm.DB) error {
 	}
 	return nil
 }
+
+func (t Tag) DeleteByID(db *gorm.DB) error {
+	tx := db.Delete(&t, t.ID)
+	if err := tx.Error; err != nil {
+		return err
+	}
+	return nil
+}

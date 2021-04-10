@@ -30,3 +30,12 @@ func (d *Dao) UpdateComment(id uint, content string) error {
 	}
 	return comment.UpdateByID(d.dbEngine)
 }
+
+func (d *Dao) DeleteComment(id uint) error {
+	comment := model.Comment{
+		Model: gorm.Model{
+			ID: id,
+		},
+	}
+	return comment.DeleteByID(d.dbEngine)
+}

@@ -19,3 +19,7 @@ func (s service) GetCategories(param *Page) ([]model.Category, error) {
 func (s service) UpdateCategory(param *CategoryReq) error {
 	return s.dao.UpdateCategory(param.ID, param.CategoryName)
 }
+
+func (s service) DeleteCategory(param *CategoryReq) error {
+	return s.dao.DeleteCategory(param.ID)
+}

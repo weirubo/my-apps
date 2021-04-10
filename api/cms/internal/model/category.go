@@ -38,3 +38,11 @@ func (c Category) UpdateByID(db *gorm.DB) error {
 	}
 	return nil
 }
+
+func (c Category) DeleteByID(db *gorm.DB) error {
+	tx := db.Delete(&c, c.ID)
+	if err := tx.Error; err != nil {
+		return err
+	}
+	return nil
+}

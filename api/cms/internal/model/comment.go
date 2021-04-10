@@ -39,3 +39,11 @@ func (c Comment) UpdateByID(db *gorm.DB) error {
 	}
 	return nil
 }
+
+func (c Comment) DeleteByID(db *gorm.DB) error {
+	tx := db.Delete(&c, c.ID)
+	if err := tx.Error; err != nil {
+		return err
+	}
+	return nil
+}

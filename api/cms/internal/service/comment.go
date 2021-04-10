@@ -22,3 +22,7 @@ func (s service) GetComments(param *Page) ([]model.Comment, error) {
 func (s service) UpdateComment(param *CommentReq) error {
 	return s.dao.UpdateComment(param.ID, param.Content)
 }
+
+func (s service) DeleteComment(param *CommentReq) error {
+	return s.dao.DeleteComment(param.ID)
+}

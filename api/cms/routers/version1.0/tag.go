@@ -78,3 +78,19 @@ func (t Tag) Edit(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{})
 }
+
+func (t Tag) Remove(c *gin.Context) {
+	param := &service.TagReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.DeleteTag(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
+}

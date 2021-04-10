@@ -31,3 +31,12 @@ func (d *Dao) UpdateUser(id uint, username, email, password string) error {
 	}
 	return user.UpdateByID(d.dbEngine)
 }
+
+func (d *Dao) DeleteUser(id uint) error {
+	user := model.User{
+		Model: gorm.Model{
+			ID: id,
+		},
+	}
+	return user.DeleteByID(d.dbEngine)
+}
