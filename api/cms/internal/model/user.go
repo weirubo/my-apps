@@ -5,7 +5,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// 映射 user 表
 type User struct {
 	gorm.Model
 	Username string `gorm:"type:varchar(20);not null;index:idx_username_email;commit:用户名"`
@@ -13,7 +12,6 @@ type User struct {
 	Password string `gorm:"type:varchar(20);not null;commit:密码" json:"-"`
 }
 
-// 表操作
 func (u User) Create(db *gorm.DB) error {
 	err := db.AutoMigrate(u)
 	if err != nil {
@@ -31,4 +29,12 @@ func (u User) ReadByPage(db *gorm.DB, pageNumber, pageSize int) ([]User, error) 
 		return nil, err
 	}
 	return users, nil
+}
+
+func (u User) UpdateByID(db *gorm.DB) error {
+	tx := db.Where("id", u.ID).Updates(&u)
+	if err := tx.Error; err != nil {
+		return err
+	}
+	return nil
 }

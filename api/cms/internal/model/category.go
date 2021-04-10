@@ -5,14 +5,12 @@ import (
 	"gorm.io/gorm"
 )
 
-// 映射 categories 表
 type Category struct {
 	gorm.Model
 	CategoryName string `gorm:"type:varchar(20);not null;commit:分类名称"`
 	Count        uint   `gorm:"type:int(10);not null;commit:文章总数"`
 }
 
-// 表操作
 func (c Category) Create(db *gorm.DB) error {
 	err := db.AutoMigrate(c)
 	if err != nil {
@@ -31,4 +29,12 @@ func (c Category) ReadByPage(db *gorm.DB, pageNumber, pageSize int) ([]Category,
 		return nil, err
 	}
 	return categories, nil
+}
+
+func (c Category) UpdateByID(db *gorm.DB) error {
+	tx := db.Where("id", c.ID).Updates(&c)
+	if err := tx.Error; err != nil {
+		return err
+	}
+	return nil
 }

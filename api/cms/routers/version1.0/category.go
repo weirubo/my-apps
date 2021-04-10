@@ -1,4 +1,4 @@
-package v1
+package version1_0
 
 import (
 	"fmt"
@@ -34,7 +34,7 @@ func (cate Category) Add(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }
 
-func (cate Category) GetCategories(c *gin.Context) {
+func (cate Category) List(c *gin.Context) {
 	param := &service.Page{}
 	err := c.ShouldBind(param)
 	if err != nil {
@@ -62,4 +62,20 @@ func (cate Category) GetCategories(c *gin.Context) {
 		"categories": categoryList,
 	}
 	c.JSON(http.StatusOK, data)
+}
+
+func (cate Category) Edit(c *gin.Context) {
+	param := &service.CategoryReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.UpdateCategory(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
 }

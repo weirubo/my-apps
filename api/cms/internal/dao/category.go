@@ -18,3 +18,13 @@ func (d *Dao) ReadCategories(pageNumber, pageSize int) ([]model.Category, error)
 	category := model.Category{}
 	return category.ReadByPage(d.dbEngine, pageNumber, pageSize)
 }
+
+func (d *Dao) UpdateCategory(id uint, categoryName string) error {
+	category := model.Category{
+		Model: gorm.Model{
+			ID: id,
+		},
+		CategoryName: categoryName,
+	}
+	return category.UpdateByID(d.dbEngine)
+}

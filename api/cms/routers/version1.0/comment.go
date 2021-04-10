@@ -1,4 +1,4 @@
-package v1
+package version1_0
 
 import (
 	"fmt"
@@ -35,7 +35,7 @@ func (com Comment) Add(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }
 
-func (com Comment) GetComments(c *gin.Context) {
+func (com Comment) List(c *gin.Context) {
 	param := &service.Page{}
 	err := c.ShouldBind(&param)
 	if err != nil {
@@ -63,4 +63,20 @@ func (com Comment) GetComments(c *gin.Context) {
 		"comments": commentList,
 	}
 	c.JSON(http.StatusOK, data)
+}
+
+func (com Comment) Edit(c *gin.Context) {
+	param := &service.CommentReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.UpdateComment(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
 }

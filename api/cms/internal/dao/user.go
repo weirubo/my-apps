@@ -5,7 +5,6 @@ import (
 	"my-apps/api/cms/internal/model"
 )
 
-// 数据操作层
 func (d *Dao) CreateUser(username, email, password string) error {
 	user := model.User{
 		Model:    gorm.Model{},
@@ -19,4 +18,16 @@ func (d *Dao) CreateUser(username, email, password string) error {
 func (d *Dao) ReadUsers(pageNumber, pageSize int) ([]model.User, error) {
 	user := model.User{}
 	return user.ReadByPage(d.dbEngine, pageNumber, pageSize)
+}
+
+func (d *Dao) UpdateUser(id uint, username, email, password string) error {
+	user := model.User{
+		Model: gorm.Model{
+			ID: id,
+		},
+		Username: username,
+		Email:    email,
+		Password: password,
+	}
+	return user.UpdateByID(d.dbEngine)
 }

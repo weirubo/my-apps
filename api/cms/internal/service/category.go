@@ -3,6 +3,7 @@ package service
 import "my-apps/api/cms/internal/model"
 
 type CategoryReq struct {
+	ID           uint   `json:"id"`
 	CategoryName string `json:"category_name"`
 	Count        uint   `json:"count"`
 }
@@ -13,4 +14,8 @@ func (s service) AddCategory(param *CategoryReq) error {
 
 func (s service) GetCategories(param *Page) ([]model.Category, error) {
 	return s.dao.ReadCategories(param.PageNumber, param.PageSize)
+}
+
+func (s service) UpdateCategory(param *CategoryReq) error {
+	return s.dao.UpdateCategory(param.ID, param.CategoryName)
 }

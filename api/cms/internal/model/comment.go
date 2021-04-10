@@ -5,7 +5,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// 映射 comments 表
 type Comment struct {
 	gorm.Model
 	Content   string `gorm:"type:varchar(360) not null;commit:评论内容"`
@@ -13,7 +12,6 @@ type Comment struct {
 	CommentID uint   `gorm:"type:int(11) not null;commit:回复评论ID"`
 }
 
-// 表操作
 func (c Comment) Create(db *gorm.DB) error {
 	err := db.AutoMigrate(c)
 	if err != nil {
@@ -32,4 +30,12 @@ func (c Comment) ReadByPage(db *gorm.DB, pageNumber, pageSize int) ([]Comment, e
 		return nil, err
 	}
 	return comments, nil
+}
+
+func (c Comment) UpdateByID(db *gorm.DB) error {
+	tx := db.Where("id", c.ID).Updates(&c)
+	if err := tx.Error; err != nil {
+		return err
+	}
+	return nil
 }

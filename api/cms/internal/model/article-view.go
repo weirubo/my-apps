@@ -5,7 +5,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// 映射 articles_view 表
 type ArticleView struct {
 	gorm.Model
 	Title        string `gorm:"type:varchar(50) not null;commit:标题"`
@@ -17,7 +16,6 @@ type ArticleView struct {
 	CommentCount uint   `gorm:"type:int(10) not null;commit:评论总数"`
 }
 
-// 表操作
 func (av ArticleView) Create(db *gorm.DB) error {
 	err := db.AutoMigrate(av)
 	if err != nil {

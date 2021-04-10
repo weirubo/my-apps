@@ -1,4 +1,4 @@
-package v1
+package version1_0
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 type User struct {
 }
 
-type UserReq struct {
+type UserRes struct {
 	ID        uint   `json:"id"`
 	UserName  string `json:"username"`
 	Email     string `json:"email"`
@@ -18,7 +18,6 @@ type UserReq struct {
 	UpdatedAt string `json:"updated_at"`
 }
 
-// 定义方法
 func (u User) Add(c *gin.Context) {
 	param := &service.UserReq{}
 	err := c.ShouldBind(param)
@@ -35,7 +34,7 @@ func (u User) Add(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }
 
-func (u User) GetUsers(c *gin.Context) {
+func (u User) List(c *gin.Context) {
 	param := &service.Page{}
 	err := c.ShouldBind(param)
 	if err != nil {
@@ -48,8 +47,8 @@ func (u User) GetUsers(c *gin.Context) {
 		fmt.Println(err)
 		return
 	}
-	var user UserReq
-	var userList []UserReq
+	var user UserRes
+	var userList []UserRes
 	for _, v := range users {
 		user.ID = v.ID
 		user.UserName = v.Username
@@ -63,4 +62,20 @@ func (u User) GetUsers(c *gin.Context) {
 		"users": userList,
 	}
 	c.JSON(http.StatusOK, data)
+}
+
+func (u User) Edit(c *gin.Context) {
+	param := &service.UserReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.UpdateUser(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
 }

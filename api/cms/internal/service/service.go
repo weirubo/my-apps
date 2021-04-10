@@ -14,7 +14,6 @@ type Page struct {
 	PageSize   int `form:"page_size"`
 }
 
-// 实例化
 func New() service {
 	svc := service{
 		dao: dao.New(common.DBEngine),

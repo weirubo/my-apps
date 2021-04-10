@@ -3,6 +3,7 @@ package service
 import "my-apps/api/cms/internal/model"
 
 type ArticleReq struct {
+	ID           uint   `json:"id"`
 	Title        string `json:"title"`
 	Description  string `json:"description"`
 	Content      string `json:"content"`
@@ -19,4 +20,8 @@ func (s service) AddArticle(param *ArticleReq) error {
 
 func (s service) GetArticles(param *Page) ([]model.Article, error) {
 	return s.dao.ReadArticles(param.PageNumber, param.PageSize)
+}
+
+func (s service) UpdateArticle(param *ArticleReq) error {
+	return s.dao.UpdateArticle(param.ID, param.CommentCount, param.Title, param.Description, param.Content, param.CategoryName, param.TagName, param.CategoryID, param.TagID)
 }

@@ -1,4 +1,4 @@
-package v1
+package version1_0
 
 import (
 	"fmt"
@@ -34,7 +34,7 @@ func (t Tag) Add(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }
 
-func (t Tag) GetTags(c *gin.Context) {
+func (t Tag) List(c *gin.Context) {
 	param := &service.Page{}
 	err := c.ShouldBind(&param)
 	if err != nil {
@@ -61,4 +61,20 @@ func (t Tag) GetTags(c *gin.Context) {
 		"tags": tagList,
 	}
 	c.JSON(http.StatusOK, data)
+}
+
+func (t Tag) Edit(c *gin.Context) {
+	param := &service.TagReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.UpdateTag(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
 }

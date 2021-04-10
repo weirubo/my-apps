@@ -18,3 +18,13 @@ func (d *Dao) ReadTags(pageNumber, pageSize int) ([]model.Tag, error) {
 	tag := model.Tag{}
 	return tag.ReadByPage(d.dbEngine, pageNumber, pageSize)
 }
+
+func (d *Dao) UpdateTag(id uint, tagName string) error {
+	tag := model.Tag{
+		Model: gorm.Model{
+			ID: id,
+		},
+		TagName: tagName,
+	}
+	return tag.UpdateByID(d.dbEngine)
+}

@@ -1,4 +1,4 @@
-package v1
+package version1_0
 
 import (
 	"fmt"
@@ -37,7 +37,7 @@ func (a Article) Add(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{})
 }
 
-func (a Article) GetArticles(c *gin.Context) {
+func (a Article) List(c *gin.Context) {
 	param := &service.Page{}
 	err := c.ShouldBind(param)
 	if err != nil {
@@ -67,4 +67,20 @@ func (a Article) GetArticles(c *gin.Context) {
 		"articles": articleList,
 	}
 	c.JSON(http.StatusOK, data)
+}
+
+func (a Article) Edit(c *gin.Context) {
+	param := &service.ArticleReq{}
+	err := c.ShouldBind(&param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	svc := service.New()
+	err = svc.UpdateArticle(param)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{})
 }
