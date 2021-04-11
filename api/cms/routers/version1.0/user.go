@@ -3,6 +3,7 @@ package version1_0
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"my-apps/api/cms/common"
 	"my-apps/api/cms/internal/service"
 	"net/http"
 )
@@ -20,15 +21,21 @@ type UserRes struct {
 
 func (u User) Add(c *gin.Context) {
 	param := &service.UserReq{}
-	err := c.ShouldBind(param)
+	err := common.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.AddUser(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20001,
+			"msg":  "add user failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -36,9 +43,11 @@ func (u User) Add(c *gin.Context) {
 
 func (u User) List(c *gin.Context) {
 	param := &service.Page{}
-	err := c.ShouldBind(param)
+	err := common.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
@@ -66,9 +75,11 @@ func (u User) List(c *gin.Context) {
 
 func (u User) Edit(c *gin.Context) {
 	param := &service.UserReq{}
-	err := c.ShouldBind(&param)
+	err := common.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
@@ -82,9 +93,11 @@ func (u User) Edit(c *gin.Context) {
 
 func (u User) Remove(c *gin.Context) {
 	param := &service.UserReq{}
-	err := c.ShouldBind(&param)
+	err := common.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()

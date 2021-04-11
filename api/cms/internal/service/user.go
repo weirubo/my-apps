@@ -6,9 +6,9 @@ import (
 
 type UserReq struct {
 	ID       uint   `json:"id"`
-	UserName string `json:"username"`
-	Email    string `json:"email"`
-	PassWord string `json:"password"`
+	UserName string `json:"username" binding:"required"`
+	Email    string `json:"email" binding:"required"`
+	PassWord string `json:"password" binding:"required"`
 }
 
 func (s service) AddUser(param *UserReq) error {
