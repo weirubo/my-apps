@@ -1,9 +1,9 @@
 package version1_0
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-apps/api/cms/internal/service"
+	"my-apps/api/cms/pkg"
 	"net/http"
 )
 
@@ -23,15 +23,21 @@ type CommentRes struct {
 
 func (com Comment) Add(c *gin.Context) {
 	param := &service.CommentReq{}
-	err := c.ShouldBind(param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.AddComment(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20501,
+			"msg":  "add comment failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -39,15 +45,21 @@ func (com Comment) Add(c *gin.Context) {
 
 func (com Comment) List(c *gin.Context) {
 	param := &service.Page{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	comments, err := svc.GetComments(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20502,
+			"msg":  "get comments failed",
+		})
 		return
 	}
 	var comment CommentRes
@@ -71,15 +83,21 @@ func (com Comment) List(c *gin.Context) {
 
 func (com Comment) Edit(c *gin.Context) {
 	param := &service.CommentReq{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.UpdateComment(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20503,
+			"msg":  "edit comment failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -87,15 +105,21 @@ func (com Comment) Edit(c *gin.Context) {
 
 func (com Comment) Remove(c *gin.Context) {
 	param := &service.CommentReq{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.DeleteComment(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20504,
+			"msg":  "delete comment failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})

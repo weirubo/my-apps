@@ -1,9 +1,9 @@
 package version1_0
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-apps/api/cms/internal/service"
+	"my-apps/api/cms/pkg"
 	"net/http"
 )
 
@@ -23,15 +23,21 @@ type ArticleRes struct {
 
 func (a Article) Add(c *gin.Context) {
 	param := &service.ArticleReq{}
-	err := c.ShouldBind(param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.AddArticle(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20401,
+			"msg":  "add article failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -39,15 +45,21 @@ func (a Article) Add(c *gin.Context) {
 
 func (a Article) List(c *gin.Context) {
 	param := &service.Page{}
-	err := c.ShouldBind(param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	articles, err := svc.GetArticles(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20402,
+			"msg":  "get articles failed",
+		})
 		return
 	}
 	var article ArticleRes
@@ -71,15 +83,21 @@ func (a Article) List(c *gin.Context) {
 
 func (a Article) Edit(c *gin.Context) {
 	param := &service.ArticleReq{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.UpdateArticle(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20403,
+			"msg":  "edit article failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -87,15 +105,21 @@ func (a Article) Edit(c *gin.Context) {
 
 func (a Article) Remove(c *gin.Context) {
 	param := &service.ArticleReq{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.DeleteArticle(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20404,
+			"msg":  "delete article failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -103,15 +127,21 @@ func (a Article) Remove(c *gin.Context) {
 
 func (a Article) View(c *gin.Context) {
 	param := &service.ArticleReq{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	articleView, err := svc.GetArticle(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20405,
+			"msg":  "get article failed",
+		})
 		return
 	}
 	articleData := ArticleRes{

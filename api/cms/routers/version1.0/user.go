@@ -1,10 +1,9 @@
 package version1_0
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
-	"my-apps/api/cms/common"
 	"my-apps/api/cms/internal/service"
+	"my-apps/api/cms/pkg"
 	"net/http"
 )
 
@@ -21,7 +20,7 @@ type UserRes struct {
 
 func (u User) Add(c *gin.Context) {
 	param := &service.UserReq{}
-	err := common.ShouldAndValid(c, param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"msg": err,
@@ -33,7 +32,7 @@ func (u User) Add(c *gin.Context) {
 	if err != nil {
 		// TODO::写日志
 		c.JSON(http.StatusOK, gin.H{
-			"code": 20001,
+			"code": 20101,
 			"msg":  "add user failed",
 		})
 		return
@@ -43,7 +42,7 @@ func (u User) Add(c *gin.Context) {
 
 func (u User) List(c *gin.Context) {
 	param := &service.Page{}
-	err := common.ShouldAndValid(c, param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"msg": err,
@@ -53,7 +52,11 @@ func (u User) List(c *gin.Context) {
 	svc := service.New()
 	users, err := svc.GetUsers(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20102,
+			"msg":  "get users failed",
+		})
 		return
 	}
 	var user UserRes
@@ -75,7 +78,7 @@ func (u User) List(c *gin.Context) {
 
 func (u User) Edit(c *gin.Context) {
 	param := &service.UserReq{}
-	err := common.ShouldAndValid(c, param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"msg": err,
@@ -85,7 +88,11 @@ func (u User) Edit(c *gin.Context) {
 	svc := service.New()
 	err = svc.UpdateUser(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20103,
+			"msg":  "edit user failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -93,7 +100,7 @@ func (u User) Edit(c *gin.Context) {
 
 func (u User) Remove(c *gin.Context) {
 	param := &service.UserReq{}
-	err := common.ShouldAndValid(c, param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"msg": err,
@@ -103,7 +110,11 @@ func (u User) Remove(c *gin.Context) {
 	svc := service.New()
 	err = svc.DeleteUser(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20103,
+			"msg":  "delete user failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})

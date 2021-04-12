@@ -1,8 +1,8 @@
 package service
 
 import (
-	"my-apps/api/cms/common"
 	"my-apps/api/cms/internal/dao"
+	"my-apps/api/cms/pkg"
 )
 
 type service struct {
@@ -16,7 +16,7 @@ type Page struct {
 
 func New() service {
 	svc := service{
-		dao: dao.New(common.DBEngine),
+		dao: dao.New(pkg.DBEngine),
 	}
 	return svc
 }

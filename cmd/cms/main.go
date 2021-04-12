@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"my-apps/api/cms/common"
+	"my-apps/api/cms/pkg"
 	"my-apps/api/cms/routers"
 	"net/http"
 	"time"
@@ -30,7 +30,7 @@ func main() {
 
 func initDBEngine() error {
 	var err error
-	common.DBEngine, err = common.NewDBEngine()
+	pkg.DBEngine, err = pkg.NewDBEngine()
 	if err != nil {
 		return err
 	}

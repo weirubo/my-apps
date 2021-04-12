@@ -8,7 +8,7 @@ import (
 type Category struct {
 	gorm.Model
 	CategoryName string `gorm:"type:varchar(20);not null;commit:分类名称"`
-	Count        uint   `gorm:"type:int(10);not null;commit:文章总数"`
+	Count        uint   `gorm:"type:int(10);not null;default:0;commit:文章总数"`
 }
 
 func (c Category) Create(db *gorm.DB) error {

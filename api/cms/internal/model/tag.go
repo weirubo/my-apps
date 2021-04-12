@@ -8,7 +8,7 @@ import (
 type Tag struct {
 	gorm.Model
 	TagName string `gorm:"type:varchar(20) not null;commit:标签名称"`
-	Count   uint   `gorm:"type:int(10) not null;commit:文章总数"`
+	Count   uint   `gorm:"type:int(10) not null;default:0;commit:文章总数"`
 }
 
 func (t Tag) Create(db *gorm.DB) error {

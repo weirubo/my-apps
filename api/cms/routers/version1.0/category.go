@@ -1,9 +1,9 @@
 package version1_0
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-apps/api/cms/internal/service"
+	"my-apps/api/cms/pkg"
 	"net/http"
 )
 
@@ -20,15 +20,21 @@ type CategoryRes struct {
 
 func (cate Category) Add(c *gin.Context) {
 	param := &service.CategoryReq{}
-	err := c.ShouldBind(param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.AddCategory(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20201,
+			"msg":  "add category failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -36,15 +42,21 @@ func (cate Category) Add(c *gin.Context) {
 
 func (cate Category) List(c *gin.Context) {
 	param := &service.Page{}
-	err := c.ShouldBind(param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	categories, err := svc.GetCategories(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20202,
+			"msg":  "get categories failed",
+		})
 		return
 	}
 	var category CategoryRes
@@ -66,15 +78,21 @@ func (cate Category) List(c *gin.Context) {
 
 func (cate Category) Edit(c *gin.Context) {
 	param := &service.CategoryReq{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.UpdateCategory(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20203,
+			"msg":  "edit category failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -82,15 +100,21 @@ func (cate Category) Edit(c *gin.Context) {
 
 func (cate Category) Remove(c *gin.Context) {
 	param := &service.CategoryReq{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.DeleteCategory(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20204,
+			"msg":  "delete category failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})

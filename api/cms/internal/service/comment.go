@@ -6,7 +6,7 @@ import (
 
 type CommentReq struct {
 	ID        uint   `json:"id"`
-	Content   string `json:"content"`
+	Content   string `json:"content" biding:"required"`
 	UserID    uint   `json:"uid"`
 	UserName  string `json:"username"`
 	ArticleID uint   `json:"article_id"`

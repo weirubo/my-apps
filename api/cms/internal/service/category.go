@@ -4,7 +4,7 @@ import "my-apps/api/cms/internal/model"
 
 type CategoryReq struct {
 	ID           uint   `json:"id"`
-	CategoryName string `json:"category_name"`
+	CategoryName string `json:"category_name" binding:"required"`
 	Count        uint   `json:"count"`
 }
 

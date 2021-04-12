@@ -4,14 +4,14 @@ import "my-apps/api/cms/internal/model"
 
 type ArticleReq struct {
 	ID           uint   `json:"id" form:"id"`
-	Title        string `json:"title"`
-	Description  string `json:"description"`
-	Content      string `json:"content"`
-	CategoryID   uint8  `json:"category_id"`
-	CategoryName string `json:"category_name"`
-	TagID        uint8  `json:"tag_id"`
-	TagName      string `json:"tag_name"`
-	CommentCount uint   `json:"comment_count"`
+	Title        string `json:"title" binding:"required"`
+	Description  string `json:"description" binding:"required"`
+	Content      string `json:"content" binding:"required"`
+	CategoryID   uint8  `json:"category_id" binding:"required"`
+	CategoryName string `json:"category_name" binding:"required"`
+	TagID        uint8  `json:"tag_id" binding:"required"`
+	TagName      string `json:"tag_name" binding:"required"`
+	CommentCount uint   `json:"comment_count" binding:"required"`
 }
 
 func (s service) AddArticle(param *ArticleReq) error {

@@ -1,9 +1,9 @@
 package version1_0
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"my-apps/api/cms/internal/service"
+	"my-apps/api/cms/pkg"
 	"net/http"
 )
 
@@ -20,15 +20,21 @@ type TagRes struct {
 
 func (t Tag) Add(c *gin.Context) {
 	param := &service.TagReq{}
-	err := c.ShouldBind(param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.AddTag(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20301,
+			"msg":  "add tag failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -36,15 +42,21 @@ func (t Tag) Add(c *gin.Context) {
 
 func (t Tag) List(c *gin.Context) {
 	param := &service.Page{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	tags, err := svc.GetTags(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20302,
+			"msg":  "get tags failed",
+		})
 		return
 	}
 	var tag TagRes
@@ -65,15 +77,21 @@ func (t Tag) List(c *gin.Context) {
 
 func (t Tag) Edit(c *gin.Context) {
 	param := &service.TagReq{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.UpdateTag(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20303,
+			"msg":  "edit tag failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})
@@ -81,15 +99,21 @@ func (t Tag) Edit(c *gin.Context) {
 
 func (t Tag) Remove(c *gin.Context) {
 	param := &service.TagReq{}
-	err := c.ShouldBind(&param)
+	err := pkg.ShouldAndValid(c, param)
 	if err != nil {
-		fmt.Println(err)
+		c.JSON(http.StatusOK, gin.H{
+			"msg": err,
+		})
 		return
 	}
 	svc := service.New()
 	err = svc.DeleteTag(param)
 	if err != nil {
-		fmt.Println(err)
+		// TODO::写日志
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20304,
+			"msg":  "delete tag failed",
+		})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{})

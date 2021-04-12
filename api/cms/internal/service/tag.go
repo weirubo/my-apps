@@ -4,7 +4,7 @@ import "my-apps/api/cms/internal/model"
 
 type TagReq struct {
 	ID      uint   `json:"id"`
-	TagName string `json:"tag_name"`
+	TagName string `json:"tag_name" binding:"required"`
 	Count   uint   `json:"count"`
 }
 
