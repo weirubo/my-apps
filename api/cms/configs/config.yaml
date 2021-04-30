@@ -1,0 +1,4 @@
+Server:
+  HttpPort: 8080
+  ReadTimeout: 10
+  WriteTimeout: 10
