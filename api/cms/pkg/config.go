@@ -16,6 +16,15 @@ type ServerConfig struct {
 	WriteTimeout time.Duration
 }
 
+type DatabaseConfig struct {
+	Username string
+	Password string
+	Host string
+	DBName string
+	Charset string
+	ParseTime bool
+}
+
 func NewViper() (*Config, error) {
 	viper := viper.New()
 	viper.SetConfigName("config")

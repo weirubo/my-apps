@@ -10,4 +10,5 @@ import (
 var (
 	DBEngine *gorm.DB
 	ServerConfig *pkg.ServerConfig
+	DatabaseConfig *pkg.DatabaseConfig
 )

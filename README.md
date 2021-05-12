@@ -39,6 +39,8 @@ v1 := r.Group("/v1")
 ├── README.md
 ├── api
 │   └── cms
+│       ├── common
+│       │   └── common.go
 │       ├── configs
 │       │   └── config.yaml
 │       ├── internal
@@ -64,8 +66,6 @@ v1 := r.Group("/v1")
 │       │       ├── tag.go
 │       │       └── user.go
 │       ├── pkg
-│       │   ├── common
-│       │   │   └── common.go
 │       │   ├── config.go
 │       │   ├── mysql.go
 │       │   └── trans.go

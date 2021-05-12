@@ -2,22 +2,22 @@ package main
 
 import (
 	"fmt"
+	"my-apps/api/cms/common"
 	"my-apps/api/cms/pkg"
-	"my-apps/api/cms/pkg/common"
 	"my-apps/api/cms/routers"
 	"net/http"
 	"time"
 )
 
 func init() {
-	err := initDBEngine()
-	if err != nil {
-		fmt.Println("initDBEngine() error:", err)
-		return
-	}
-	err = initConfig()
+	err := initConfig()
 	if err != nil {
 		fmt.Println("initConfig() error:", err)
+		return
+	}
+	err = initDBEngine()
+	if err != nil {
+		fmt.Println("initDBEngine() error:", err)
 		return
 	}
 }
@@ -43,6 +43,10 @@ func initConfig () error {
 	if err != nil {
 		return err
 	}
+	err = config.ReadConfig("Database", &common.DatabaseConfig)
+	if err != nil {
+		return err
+	}
 	common.ServerConfig.ReadTimeout *= time.Second
 	common.ServerConfig.WriteTimeout *= time.Second
 	return nil
@@ -50,7 +54,7 @@ func initConfig () error {
 
 func initDBEngine() error {
 	var err error
-	common.DBEngine, err = pkg.NewDBEngine()
+	common.DBEngine, err = pkg.NewDBEngine(common.DatabaseConfig)
 	if err != nil {
 		return err
 	}
